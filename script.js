@@ -6,8 +6,8 @@
 
 // Null is an actual value
 // undefined is when variable is declared but it is not initialized
-console.log("Type of Null: ",typeof null);
-console.log("Type of undefined: ",typeof undefined);
+console.log("Type of Null: ",typeof null); //object
+console.log("Type of undefined: ",typeof undefined); //undefined
 
 let a;
 let b = null;
@@ -241,7 +241,7 @@ let names1 = []
 for(let i in users){
     names1.push(users[i].name)
 }
-console.log("For loop: ",names1);
+console.log("For-in loop: ",names1);
 
 const uname = []
 users.forEach((user)=> uname.push(user.name))
@@ -297,10 +297,11 @@ const isActiveUser = (name,users)=>{
 }
 isActiveUser("Sneha",users) ? console.log("User is active") : console.log("User is not active");
 
-// Write the same in single line
+// Check if user name in users array
+
 // .some iterates through an array of objects. It returns true if any of the elements in the array satisfies the condition.
 const isNameExist = (name,arr) => arr.some((el)=> el.name === name);
-isNameExist("Ashika",users) ? console.log("User is active") : console.log("User is not active");
+isNameExist("Ashika",users) ? console.log("Name exists") : console.log("Name doesn't exist");
 
 // .find iterates through an array of objects. It returns the first element that satisfies the condition
 //  In JavaScript, certain values are considered falsy, such as null, undefined, 0, NaN, an empty string (""), and false. 
@@ -308,7 +309,8 @@ isNameExist("Ashika",users) ? console.log("User is active") : console.log("User 
 // So Boolean(el) will return true if el is not null, undefined, 0, NaN, an empty string (""), and false.
 const FindNameExist = (name,arr) => {
     const el = arr.find(el => el.name === name)
-    return Boolean(el) ? console.log("User is active") : console.log("User is not active");
+    console.log(el)
+    return Boolean(el) ? console.log("Name exists ") : console.log("Name doesn't exist");
 }
 FindNameExist("Ashika",users) 
 
@@ -317,7 +319,7 @@ const FindIndexNameExist = (name,arr) => {
     let elIndex = arr.findIndex(el => el.name === name)
     return elIndex > -1 
 }
-FindIndexNameExist("Ashika",users) ? console.log("User is active") : console.log("User is not active");
+FindIndexNameExist("Ashika",users) ? console.log("Name exists") : console.log("Name doesn't exist");
 
 
 
@@ -340,7 +342,7 @@ console.log("Unique Array: ",uniqueArray(arrays));
 const uniqueArray3 = (arr)=>{
     let res = []
     arr.forEach((item)=>{
-        if(!res.includes(item)){
+        if(!res.includes(item)){ //includes - IMPORTANT IMPORTANT IMPORTANT
             res.push(item);
         }
     })
@@ -397,8 +399,10 @@ const books = [
     },
 ]
 books.sort((book1,book2)=>{
+    console.log(book1,book2);
     const l1 = book1.author.split(" ")[1];
     const l2 = book2.author.split(" ")[1];
+    console.log(l1,l2);
     return l1<l2 ? -1:1;
 })
 console.log("Sort array of objects by authors last name: ",books);
@@ -514,6 +518,8 @@ person.hello.call(anotherName," Makam"); // Output : Hello Sukhesh Makam
 person.hello.apply({firstName:"Ashika"},[" Makam"]); // Output : Hello Ashika Makam
 person.hello.apply(anotherName,[" Makam"]); // Output : Hello Sukhesh Makam
 
+//The bind method is used to create a new function with a specified this value and optionally pre-set arguments. 
+// It does not invoke the function immediately but returns a new function that you can call later.
 const myName = person.hello.bind(anotherName);
 myName(" Makam"); // Output : Hello Sukhesh Makam
 
@@ -617,7 +623,7 @@ function calculate(operation, ...args) {
 
 
 // Implement the following function - Function Chaining
-
+// Programming technique in which multiple methods are called in sequence on an object with each method operating on the result of the previous one
 const calc = {
     value: 0,
     add(num) {
@@ -647,17 +653,20 @@ console.log("Function Chaining: ",calc.add(4).subtract(1).multiply(4).divide(2).
 
 
 
-// Function composition example
-const addF = calculate('add', 2, 3, 5);
+// Function composition
+// It ss a functional programming where you create a new function by combining two or more functions. 
+// const addF = calculate('add', 2, 3, 5);
 
+const addF = (x, y) => x + y;
 const double = (x) => x * 2;
 const subtractTen = (x) => x - 10;
 
-const composedFunc = (x, y) => subtractTen(double(addF()));
+// creating composedFunc function by combining addF, double and subtractTen functions`
+const composedFunc = (x, y) => subtractTen(double(addF(x, y)));
 
+// calling composedFunc function
 const finalResult = composedFunc(5, 3);
-
-console.log(finalResult); // Output: 10 (result of (5 + 3 + 2) => 10 => double => 20 => subtractTen => 10)
+console.log("Function composition: ",finalResult); // Output: 6
 
 
 
@@ -667,24 +676,19 @@ console.log(finalResult); // Output: 10 (result of (5 + 3 + 2) => 10 => double =
 
 // Closure
 // Closure is a function that has access to the parent scope, even after the parent function has closed
+
 // Closure functions have access to all properties of the parent function
-function adder(x){
-    return function(y){
-        return x+y;
-    }
-}
-const addval = adder(5);
-console.log("Adder(x) returns a function: ",addval);
-console.log("In Closure: ",addval(10));
+// A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment).
+// In other words, a closure gives you access to an outer function's scope from an inner function.
 
 // Create a counter function which has an intcrement and get value function
 // Increment function increments the counter value by 1
 // Get value function returns the counter value
 function counter(){
-    let count = 0;
+    let count = 0; // outer function scope
     return {
-        increment : (val=1) =>{
-            count+=val;
+        increment : (val=1) =>{ 
+            count+=val; // inner function scope
         },
         getValue : () =>{
             return count;
@@ -735,6 +739,7 @@ function addFinite(a){
 }
 console.log("For fixed level currying:",addFinite(2)(3)()); // Output: 5
 
+// IMPORTANT IMPORTANT IMPORTANT
 function addInfinite(a){
     return function(b){
         if(b){
@@ -818,10 +823,10 @@ function showText(text, s){
 //Create Polyfill for Promise.all()
 const myPromiseAll = (promises)=>{
     let result = [];
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve,reject)=>{ // this new promise will resolve when all the promises in the array are resolved
         promises.forEach((p,index)=>{
             p.then(res=>{
-                result[index] = res;
+                result.push(res);
                 if (result.length === promises.length) {
                     resolve(result);
                 }
@@ -831,7 +836,6 @@ const myPromiseAll = (promises)=>{
             })
         })
     })
-
 }
 
 // Promise.all(
@@ -930,6 +934,9 @@ console.log("a")
 setTimeout(()=> console.log("b"),0); 
 //setTimeout is a Web API and it is executed after the call stack is empty. It runs after complete code is executed.
 //setTimeout will go to task queue and will be executed after call stack is empty
+x=function(){
+    console.log("e")
+}()
 Promise.resolve().then(()=> console.log("c"));
 //Promise is a microtask and it is executed before the call stack is empty. It runs before complete code is executed.
 //Promise will be in priority queue and will be executed before task queue
@@ -1267,3 +1274,7 @@ btn.addEventListener("click",()=>{
     throttleCount()
     
 })
+
+
+
+
