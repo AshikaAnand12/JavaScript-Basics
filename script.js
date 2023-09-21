@@ -168,7 +168,7 @@ function printNumbersWithLet() {
 //Keep var and get the desired output 
 function printNumbersWithVar() {
     for (var i = 0; i < 5; i++) {
-      (function (num) { //The function here creates a new scope and the value of i is passed to the function as num
+      (function (num) { //The function here creates a NEW SCOPE and the value of i is passed to the function as num
         setTimeout(() => {
           console.log("printNumbersWithVar: ",num);
         }, num * 1000);
@@ -286,7 +286,7 @@ console.log("Use of .filter on an array: ",filteredusers);
 
 // Check if the given name for the user is active or not
 
-const isActiveUser = (name,users)=>{
+const ifActiveUser = (name,users)=>{
     let flag = false;
     for(let i=0;i<users.length;i++){
         if(users[i].name === name){
@@ -295,13 +295,13 @@ const isActiveUser = (name,users)=>{
     }
     return flag;
 }
-isActiveUser("Sneha",users) ? console.log("User is active") : console.log("User is not active");
+ifActiveUser("Sneha",users) ? console.log("User is active") : console.log("User is not active");
 
 // Check if user name in users array
 
 // .some iterates through an array of objects. It returns true if any of the elements in the array satisfies the condition.
-const isNameExist = (name,arr) => arr.some((el)=> el.name === name);
-isNameExist("Ashika",users) ? console.log("Name exists") : console.log("Name doesn't exist");
+const someNameExist = (name,arr) => arr.some((el)=> el.name === name);
+someNameExist("Ashika",users) ? console.log("Name exists") : console.log("Name doesn't exist");
 
 // .find iterates through an array of objects. It returns the first element that satisfies the condition
 //  In JavaScript, certain values are considered falsy, such as null, undefined, 0, NaN, an empty string (""), and false. 
@@ -330,13 +330,13 @@ FindIndexNameExist("Ashika",users) ? console.log("Name exists") : console.log("N
 // Set : Set is a collection of unique values
 // Remove all duplicates from the array
 const arrays = [1,2,2]
-const uniqueArray = (arr)=> {return [...new Set(arr)];}
+const SetUniqueArray = (arr)=> {return [...new Set(arr)];}
 const uniqueArray1 = (arr)=> [...new Set(arr)]
 
 // Difference in writing it as functions and variables is that you can pass any array as an argument to the function and get the unique values
 // But for assigning directly to a variable as below, it is fixed to the variable "arrays"
 const uniqueArray2 = [...new Set(arrays)]
-console.log("Unique Array: ",uniqueArray(arrays));
+console.log("Unique Array: ",SetUniqueArray(arrays));
 
 // Same without using Set
 const uniqueArray3 = (arr)=>{
@@ -358,14 +358,14 @@ console.log("Unique Array without using Set: ",uniqueArray3(arrays));
 
 // Destructuring an object by using {}
 // An object with properties
-const person1 = {
+const DestructurePerson = {
   name: 'John',
   age: 30,
   city: 'New York'
 };
 
 // Destructuring the object properties into variables
-const { n, age, city } = person1;
+const { n, age, city } = DestructurePerson;
 
 console.log(n); // Output: John
 console.log(age);  // Output: 30
@@ -483,11 +483,11 @@ console.log("Flattened Array using for loop: ",flattenN(toFlatArr,2));
 
 // Callback vs promises vs async await
 // Callbacks are functions that are passed as arguments to other functions
-const function1 = (name,callback)=>{
+const callbackFunction1 = (name,callback)=>{
     console.log("Function 1: ",name);
     callback();
 }
-function1("Ashika",()=> console.log("In Callback function"));
+callbackFunction1("Ashika",()=> console.log("In Callback function"));
 
 
 
@@ -500,27 +500,27 @@ function1("Ashika",()=> console.log("In Callback function"));
 
 // Call, Apply and Bind are used to change the context of a function
 
-const person = {
+const CallApplyBindPerson = {
     firstName: "Ashika",
     hello : function(lastName){
         console.log(`Hello ${this.firstName} ` + lastName);
     }
 }
 
-person.hello("Makam"); // Output : Hello Ashika Makam
+CallApplyBindPerson.hello("Makam"); // Output : Hello Ashika Makam
 
 const anotherName = {
     firstName: "Sukhesh",
 }
-person.hello.call({firstName:"Ashika"}," Makam"); // Output : Hello Ashika Makam
-person.hello.call(anotherName," Makam"); // Output : Hello Sukhesh Makam
+CallApplyBindPerson.hello.call({firstName:"Ashika"}," Makam"); // Output : Hello Ashika Makam
+CallApplyBindPerson.hello.call(anotherName," Makam"); // Output : Hello Sukhesh Makam
 
-person.hello.apply({firstName:"Ashika"},[" Makam"]); // Output : Hello Ashika Makam
-person.hello.apply(anotherName,[" Makam"]); // Output : Hello Sukhesh Makam
+CallApplyBindPerson.hello.apply({firstName:"Ashika"},[" Makam"]); // Output : Hello Ashika Makam
+CallApplyBindPerson.hello.apply(anotherName,[" Makam"]); // Output : Hello Sukhesh Makam
 
 //The bind method is used to create a new function with a specified this value and optionally pre-set arguments. 
 // It does not invoke the function immediately but returns a new function that you can call later.
-const myName = person.hello.bind(anotherName);
+const myName = CallApplyBindPerson.hello.bind(anotherName);
 myName(" Makam"); // Output : Hello Sukhesh Makam
 
 
@@ -533,12 +533,12 @@ myName(" Makam"); // Output : Hello Sukhesh Makam
 
 var obj1 = {
     name:"Ashika",
-    hello: function(){
+    implicitBindingHello: function(){
         console.log("From Implicit Binding: ",this.name);
     }
 }
 
-obj1.hello(); // Output : Ashika
+obj1.implicitBindingHello(); // Output : Ashika
 
 var obj2 = {
     name:"Ashika",
@@ -550,7 +550,7 @@ var obj2 = {
 obj3 = {
     name:"Sukhesh",
 }
-obj1.hello.call(obj3); // Output : Sukhesh
+obj1.implicitBindingHello.call(obj3); // Output : Sukhesh
 
 obj2.hello.call(obj3); // Output : undefined because
 // Arrow functions have a special behavior regarding the this keyword - they do not have their own this context and instead inherit it from the surrounding lexical scope. 
@@ -567,15 +567,15 @@ obj2.hello.call(obj3); // Output : undefined because
 // What is the output of the following code?
 const user = {
     name: "Ashika",
-    hi(){
+    hiWithoutArrowFunction(){
         return `Hi ${this.name}`;
     },
-    bye:()=>{
+    byeWithArrayFunction:()=>{
         return `Bye ${this.name}`;
     }
 }
-console.log("THIS keyword without arrow function",user.hi()); // Output : Hi Ashika
-console.log("THIS keyword with arrow function",user.bye()); // Output : Bye 
+console.log("THIS keyword without arrow function",user.hiWithoutArrowFunction()); // Output : Hi Ashika
+console.log("THIS keyword with arrow function",user.byeWithArrayFunction()); // Output : Bye 
 
 
 
@@ -587,7 +587,7 @@ console.log("THIS keyword with arrow function",user.bye()); // Output : Bye
 // A higher-order function is a function that takes one or more functions as arguments, returns a function as a result, or both. 
 // In this case, the calculate function takes two arguments - the operation and the rest parameter ...args. It then returns a function based on the provided operation.
 
-function calculate(operation, ...args) {
+function HOFCalculate(operation, ...args) {
     switch (operation) {
       case 'add':
         return function() {
@@ -610,10 +610,10 @@ function calculate(operation, ...args) {
     }
   }
   
-  const addFunc = calculate('add', 2, 3, 5); 
+  const addFunc = HOFCalculate('add', 2, 3, 5); 
   console.log("From higher order function call",addFunc()); // Output: 10
   
-  const multiplyFunc = calculate('multiply', 2, 3, 5);
+  const multiplyFunc = HOFCalculate('multiply', 2, 3, 5);
   console.log("From higher order function call",multiplyFunc()); // Output: 30
 
 
@@ -624,7 +624,7 @@ function calculate(operation, ...args) {
 
 // Implement the following function - Function Chaining
 // Programming technique in which multiple methods are called in sequence on an object with each method operating on the result of the previous one
-const calc = {
+const ChainingCalculator = {
     value: 0,
     add(num) {
       this.value += num;
@@ -644,7 +644,7 @@ const calc = {
     }
   };
 
-console.log("Function Chaining: ",calc.add(4).subtract(1).multiply(4).divide(2).value); 
+console.log("Function Chaining: ",ChainingCalculator.add(4).subtract(1).multiply(4).divide(2).value); 
 
 
 
@@ -662,10 +662,10 @@ const double = (x) => x * 2;
 const subtractTen = (x) => x - 10;
 
 // creating composedFunc function by combining addF, double and subtractTen functions`
-const composedFunc = (x, y) => subtractTen(double(addF(x, y)));
+const composeFunction = (x, y) => subtractTen(double(addF(x, y)));
 
 // calling composedFunc function
-const finalResult = composedFunc(5, 3);
+const finalResult = composeFunction(5, 3);
 console.log("Function composition: ",finalResult); // Output: 6
 
 
@@ -684,7 +684,7 @@ console.log("Function composition: ",finalResult); // Output: 6
 // Create a counter function which has an intcrement and get value function
 // Increment function increments the counter value by 1
 // Get value function returns the counter value
-function counter(){
+function ClosureCounter(){
     let count = 0; // outer function scope
     return {
         increment : (val=1) =>{ 
@@ -696,7 +696,7 @@ function counter(){
     }
 }
 
-const c = counter(); // c is a closure function
+const c = ClosureCounter(); // c is a closure function
 console.log("In Closures: ")
 console.log(c.getValue());
 c.increment();
@@ -709,13 +709,13 @@ console.dir(c.getValue);
 // Interview Question : Create a function that will store secret string and it will just return it when function called
 // This should be done using CLOSURE
 
-function secretString(){
+function ClosureSecretString(){
     const s = "Secret";
     return ()=> s;
 }
 
-console.log(secretString()());
-const s1 = secretString();
+console.log(ClosureSecretString()());
+const s1 = ClosureSecretString();
 console.log(s1());
 
 
@@ -728,7 +728,7 @@ console.log(s1());
 // Explain Infinte Currying
 // Implement add(2)(3)(4)(5) = 14
 
-function addFinite(a){
+function CurryAddFinite(a){
     return function(b)
     {
         return function()
@@ -737,18 +737,18 @@ function addFinite(a){
         }
     }
 }
-console.log("For fixed level currying:",addFinite(2)(3)()); // Output: 5
+console.log("For fixed level currying:",CurryAddFinite(2)(3)()); // Output: 5
 
 // IMPORTANT IMPORTANT IMPORTANT
-function addInfinite(a){
+function curryingToAddInfinite(a){
     return function(b){
         if(b){
-            return addInfinite(a+b);
+            return curryingToAddInfinite(a+b);
         }
         return a;
     }
 }
-console.log("For infinite level currying:",addInfinite(2)(3)(4)(5)()); // Output: 14
+console.log("For infinite level currying:",curryingToAddInfinite(2)(3)(4)(5)()); // Output: 14
 
 
 
@@ -779,7 +779,7 @@ function multiplyByThree(a){
 It is initialized as a function that takes in any number of arguments using the rest parameter syntax (...functions). 
 This allows us to pass in multiple functions as arguments.*/
 
-const compose = (...functions) => {
+const composePolyfill = (...functions) => {
     return (args) => { // The compose function returns another function that takes in a single argument named args.
         /* Within the returned function, we use the reduceRight method on the functions array. 
         The reduceRight method iterates over the functions array from right to left (in reverse order). 
@@ -789,16 +789,16 @@ const compose = (...functions) => {
     }
 }
 
-const pipe = (...functions) => {
+const pipePolyfill = (...functions) => {
     return (args) => {
         return functions.reduce((arg,fn)=> fn(arg),args);
     }
 }
 
-const evaluateCompose = compose(addFive,subtractTwo,multiplyByThree);
+const evaluateCompose = composePolyfill(addFive,subtractTwo,multiplyByThree);
 console.log(evaluateCompose(5)); // Output : 18
 
-const evaluatePipe = pipe(addFive,subtractTwo,multiplyByThree);
+const evaluatePipe = pipePolyfill(addFive,subtractTwo,multiplyByThree);
 console.log(evaluatePipe(5)); // Output : 24
 
 
@@ -930,18 +930,20 @@ console.timeEnd("Second Mem Call")
 
 // What is the output of the following code?
 
+console.log("Call Stack -> Priority Queue -> Task Queue")
 console.log("a")
 setTimeout(()=> console.log("b"),0); 
 //setTimeout is a Web API and it is executed after the call stack is empty. It runs after complete code is executed.
 //setTimeout will go to task queue and will be executed after call stack is empty
 x=function(){
     console.log("e")
-}()
+}
 Promise.resolve().then(()=> console.log("c"));
 //Promise is a microtask and it is executed before the call stack is empty. It runs before complete code is executed.
 //Promise will be in priority queue and will be executed before task queue
 //Call Stack -> Priority Queue -> Task Queue
-console.log("d")
+x()
+console.log("d") //Output: a e d c b
 
 //Execution order:
 
@@ -955,7 +957,7 @@ console.log("d")
  * 7. The event loop continues this process, constantly checking the call stack, priority queue, and task queue until there are no more tasks to execute.
  */
 
-//Output: a d c b
+//Output: a e d c b
 
 
 
@@ -1177,7 +1179,7 @@ Module.publicMethod()
 
 
 // Once Polyfill - Closures
-function once(func,context){
+function oncePolyfill(func,context){
     let ran ;
     return function(){
         if(func){
@@ -1187,11 +1189,11 @@ function once(func,context){
         return ran;
     }
 }
-const hello = once(() => console.log("hello"))
+const hello = oncePolyfill(() => console.log("hello in Once Pollyfill"))
 hello()
 hello()
 
-const argHello = once((a,b)=>console.log(a,b))
+const argHello = oncePolyfill((a,b)=>console.log(a,b))
 argHello(1,2)
 argHello(3,4)
 
@@ -1237,8 +1239,7 @@ const count = document.querySelector(".increment_count");
 
 var pressedCount = 0
 var triggeredCount = 0
-
-
+// Loadash has debounce
 
 // Create debounce polyfill - Custom debounce function
 const myDebounce = (cb,delay)=>{
